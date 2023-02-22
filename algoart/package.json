@@ -1,0 +1,9 @@
+{
+  "name": "algoart",
+  "version": "1.0",
+  "description": "Generative Art",
+  "main": "index.js",
+  "repository": "https://github.com/KintsugiCode/algoart",
+  "author": "kintsugi",
+  "license": "MIT"
+}
