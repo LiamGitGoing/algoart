@@ -5,5 +5,9 @@
   "main": "index.js",
   "repository": "https://github.com/KintsugiCode/algoart",
   "author": "kintsugi",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "p5.anims": "0.0.6",
+    "p5bezier": "^0.3.3"
+  }
 }

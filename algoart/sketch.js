@@ -1,61 +1,42 @@
-const CANVAS_HEIGHT = 900;
-const CANVAS_WIDTH = 1910;
-
-class Circle {
-  constructor(x, y, d, xSpeed, ySpeed) {
-    this.x = x;
-    this.y = y;
-    this.d = d;
-    this.xSpeed = xSpeed;
-    this.ySpeed = ySpeed;
-  }
-}
-
-let randomDestabilizer;
-let randomDestabilizerArray = new Array(1000);
-for (let i = 0; i < randomDestabilizerArray.length; i++) {
-  randomDestabilizerArray[i] = i / randomDestabilizerArray.length + 1;
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 function setup() {
-  createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-  mainCircle = new Circle(955, 450, 400, 1, 1);
+  createCanvas(windowWidth, windowHeight);
+  angleMode(DEGREES);
+  colorMode(HSB, 360, 100, 100, 100);
+  rectMode(CENTER);
+  strokeWeight(3);
+  stroke(32, 51, 88);
+
+  ballCenter = new PrimaryBall(windowWidth / 2, windowHeight / 2, 400, 0.5, 0.5);
+  ballLeftTop = new PrimaryBall(windowWidth / 5, windowHeight / 4, 250, 0.3, 0.3);
+  ballRightTop = new PrimaryBall(windowWidth / 1.2, windowHeight / 5, 200, 0.2, 0.2);
+  ballLeftBottom = new PrimaryBall(windowWidth / 5.8, windowHeight / 1.3, 150, 0.3, 0.3);
+  ballRightBottom = new PrimaryBall(windowWidth / 1.3, windowHeight / 1.4, 100, 0.4, 0.4);
+  ballCenterTop = new PrimaryBall(windowWidth / 2.05, windowHeight / 8, 80, 0.6, 0.6);
 }
 
 function draw() {
-  background(200, 200, 300);
+  setPrimaryBallGradient(31, 32);
+  background(300, 6, 13);
 
-  randomDestabilizer = random(randomDestabilizerArray);
+  ballCenter.move();
+  ballCenter.show();
 
-  // x values of movement
-  // destabilizer
-  if (randomDestabilizer < 1.01) {
-    mainCircle.xSpeed *= -1;
-  } else {
-    mainCircle.x += mainCircle.xSpeed;
-  }
-  // boundary behaviour
-  if (
-    mainCircle.x - mainCircle.d / 2 < 0 ||
-    mainCircle.x + mainCircle.d / 2 > width
-  ) {
-    mainCircle.xSpeed *= -1;
-  }
+  ballLeftTop.move();
+  ballLeftTop.show();
 
-  // y values of movement
-  // destabilizer
-  if (randomDestabilizer > 1.99) {
-    mainCircle.ySpeed *= -1;
-  } else {
-    mainCircle.y += mainCircle.ySpeed;
-  }
-  // boundary behaviour
-  if (
-    mainCircle.y - mainCircle.d / 2 < 0 ||
-    mainCircle.y + mainCircle.d / 2 > height
-  ) {
-    mainCircle.ySpeed *= -1;
-  }
+  ballRightTop.move();
+  ballRightTop.show();
 
-  circle(mainCircle.x, mainCircle.y, mainCircle.d);
+  ballLeftBottom.move();
+  ballLeftBottom.show();
+
+  ballRightBottom.move();
+  ballRightBottom.show();
+
+  ballCenterTop.move();
+  ballCenterTop.show();
 }
