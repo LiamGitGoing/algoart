@@ -1,60 +1,53 @@
-let button1, button2;
-let latInput, longInput;
-let textContent = '';
+let button1;
+let textContent = "";
 // let lScale = 4;
 let minLongitude;
 let maxLongitude;
 let minLatitude;
 let maxLatitude;
-let url = '';
+let url = "";
 let flightArr = [];
 let checkFlightArr = [];
 let planeArr = [];
 let CtoP = [];
 let PtoC = [];
 var easyCam;
-let interReg, interSB;
 let ceiling = 500;
 let sceneNum = 0;
 let errorM = false;
-
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight, WEBGL);
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight, WEBGL);
   angleMode(DEGREES);
   colorMode(HSB, 360, 100, 100, 100);
   rectMode(CENTER);
   strokeWeight(3);
   stroke(32, 51, 88);
 
-  ballCenter = new PrimaryBall(windowWidth / 2, windowHeight / 2, 400, 0.5, 0.5);
-  ballLeftTop = new PrimaryBall(windowWidth / 5, windowHeight / 4, 250, 0.3, 0.3);
-  ballRightTop = new PrimaryBall(windowWidth / 1.2, windowHeight / 5, 200, 0.2, 0.2);
-  ballLeftBottom = new PrimaryBall(windowWidth / 5.8, windowHeight / 1.3, 150, 0.3, 0.3);
-  ballRightBottom = new PrimaryBall(windowWidth / 1.3, windowHeight / 1.4, 100, 0.4, 0.4);
-  ballCenterTop = new PrimaryBall(windowWidth / 2.05, windowHeight / 8, 80, 0.6, 0.6);
+  // ballCenter = new PrimaryBall(windowWidth / 2, windowHeight / 2, 400, 0.5, 0.5);
+  // ballLeftTop = new PrimaryBall(windowWidth / 5, windowHeight / 4, 250, 0.3, 0.3);
+  // ballRightTop = new PrimaryBall(windowWidth / 1.2, windowHeight / 5, 200, 0.2, 0.2);
+  // ballLeftBottom = new PrimaryBall(windowWidth / 5.8, windowHeight / 1.3, 150, 0.3, 0.3);
+  // ballRightBottom = new PrimaryBall(windowWidth / 1.3, windowHeight / 1.4, 100, 0.4, 0.4);
+  // ballCenterTop = new PrimaryBall(windowWidth / 2.05, windowHeight / 8, 80, 0.6, 0.6);
 
   angleMode(DEGREES);
-  setAttributes('antialias', true);
+  setAttributes("antialias", true);
   push();
   translate(-width / 2, -height / 2);
   pop();
 
-
-
-  button1 = createButton('Use my location');
+  button1 = createButton("Use my location");
   button1.position(width / 2 + 100, 470);
-  button1.mousePressed(function() {
+  button1.mousePressed(function () {
     geoFindMe();
-    setInterval(submit, 10500);
+    setInterval(submit(minLatitude, maxLatitude, minLongitude, maxLongitude), 10000);
   });
-
 }
-
 
 function draw() {
   // setPrimaryBallGradient(31, 32);
@@ -79,7 +72,6 @@ function draw() {
   // ballCenterTop.show();
 
   switch (sceneNum) {
-
     case 0:
       break;
 
@@ -104,12 +96,17 @@ function draw() {
   }
 }
 
-
-
-
-function submit() {
+function submit(minLatitude, maxLatitude, minLongitude, maxLongitude) {
   checkFlightArr.splice(0, checkFlightArr.length);
-  url = 'https://opensky-network.org/api/states/all?lamin=' + minLatitude + '&lomin=' + minLongitude + '&lamax=' + maxLatitude + '&lomax=' + maxLongitude;
+  url =
+    "https://opensky-network.org/api/states/all?lamin=" +
+    minLatitude +
+    "&lomin=" +
+    minLongitude +
+    "&lamax=" +
+    maxLatitude +
+    "&lomax=" +
+    maxLongitude;
 
   loadJSON(url, gotData);
 }
@@ -118,7 +115,7 @@ function gotData(data) {
   if (data.states != null) {
     sceneNum = 1;
     hideUI();
-  } 
+  }
   for (var i = 0; i < data.states.length; i++) {
     if (!data.states[i][8]) {
       checkFlightArr.push(data.states[i]);
@@ -129,8 +126,6 @@ function gotData(data) {
   cDiff();
 }
 
-
-
 function matchArray() {
   //initally populate planeArr
 
@@ -140,7 +135,18 @@ function matchArray() {
       let yL = map(checkFlightArr[x][6], minLatitude, maxLatitude, 0, height);
       let zL = map(checkFlightArr[x][7], 0, 15000, 0, ceiling);
       if (checkFlightArr[x][7] != null) {
-        planeArr.push(new Plane(xL, yL, zL, checkFlightArr[x][0], checkFlightArr[x][10], checkFlightArr[x][9], checkFlightArr[x][1], checkFlightArr[x][2]));
+        planeArr.push(
+          new Plane(
+            xL,
+            yL,
+            zL,
+            checkFlightArr[x][0],
+            checkFlightArr[x][10],
+            checkFlightArr[x][9],
+            checkFlightArr[x][1],
+            checkFlightArr[x][2]
+          )
+        );
       }
     }
   }
@@ -156,7 +162,6 @@ function matchArray() {
       }
     }
   }
-
 }
 
 function cDiff() {
@@ -174,7 +179,7 @@ function cDiff() {
     pArr.push(planeArr[b].ident);
   }
   CtoP.splice(0, CtoP.length);
-  let intersection1 = cArr.filter(x => !pArr.includes(x));
+  let intersection1 = cArr.filter((x) => !pArr.includes(x));
   for (var i = 0; i < intersection1.length; i++) {
     CtoP.push(intersection1[i]);
   }
@@ -185,14 +190,24 @@ function cDiff() {
         let yL = map(checkFlightArr[x][6], minLatitude, maxLatitude, 0, height);
         let zL = map(checkFlightArr[x][7], 0, 15000, 0, ceiling);
         if (checkFlightArr[x][7] != null) {
-          planeArr.push(new Plane(xL, yL, zL, checkFlightArr[x][0], checkFlightArr[x][10], checkFlightArr[x][9], checkFlightArr[x][1], checkFlightArr[x][2]));
+          planeArr.push(
+            new Plane(
+              xL,
+              yL,
+              zL,
+              checkFlightArr[x][0],
+              checkFlightArr[x][10],
+              checkFlightArr[x][9],
+              checkFlightArr[x][1],
+              checkFlightArr[x][2]
+            )
+          );
         }
       }
-
     }
   }
   PtoC.splice(0, PtoC.length);
-  let intersection2 = pArr.filter(w => !cArr.includes(w));
+  let intersection2 = pArr.filter((w) => !cArr.includes(w));
 
   for (var k = 0; k < intersection2.length; k++) {
     PtoC.push(intersection2[k]);
@@ -205,18 +220,15 @@ function cDiff() {
       }
     }
   }
-
 }
-
-
 
 class Plane {
   constructor(tX, tY, tZ, tIdent, tHeading, tSpeed, tCall, tOrigin) {
     this.loc = {
       x: tX,
       y: tY,
-      z: tZ
-    }
+      z: tZ,
+    };
     this.arrList = [];
     this.ident = tIdent;
     this.land = false;
@@ -258,8 +270,8 @@ class Plane {
     this.newPos = {
       x: this.newX,
       y: this.newY,
-      z: this.newZ
-    }
+      z: this.newZ,
+    };
 
     this.randPos = {
       x1: this.rX,
@@ -267,10 +279,10 @@ class Plane {
       z1: this.rZ,
       x2: this.lX,
       y2: this.lY,
-      z2: this.lZ
-    }
+      z2: this.lZ,
+    };
     this.arr = this.arrList;
-    this.arr.push(this.randPos)
+    this.arr.push(this.randPos);
     this.arrList = this.arr;
     this.loc = this.newPos;
   }
@@ -278,13 +290,13 @@ class Plane {
   hover() {
     push();
     translate(this.loc.x + 20, this.loc.y, this.loc.z);
-    rotateX((-90));
+    rotateX(-90);
     fill(0, 230);
     noStroke();
-    textFont(interSB);
+    textFont("Helvetica");
     text(this.call, 0, 0);
 
-    textFont(interReg);
+    textFont("Georgia");
     text(this.origin, 0, 0 + 12);
     pop();
   }
@@ -304,7 +316,7 @@ class Plane {
     pop();
     push();
     translate(this.lX, this.lY, this.lZ);
-    stroke(255, 0, 0)
+    stroke(255, 0, 0);
     sphere(2);
     pop();
 
@@ -329,7 +341,4 @@ class Plane {
 
 function hideUI() {
   button1.hide();
-  button2.hide();
-  latInput.hide();
-  longInput.hide();
 }
