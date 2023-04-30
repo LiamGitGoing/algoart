@@ -13,10 +13,9 @@ function windowResized() {
 
 async function setup(asteroids) {
   createCanvas(windowWidth, windowHeight, WEBGL);
-  background(20, 36, 11);
-  colorMode(HSB, 360, 100, 100, 100);
+  background(0,46,126);
   strokeWeight(3);
-  stroke(32, 51, 88);
+  stroke(144,197,223);
 
   translate(-windowWidth / 2, -windowHeight / 2);
 
@@ -44,9 +43,10 @@ async function setup(asteroids) {
         0.5
       );
     }
+  
     hideUI();
     if (asteroids) {
-      setInterval(display, 300, balls);
+      setInterval(display, 50, balls);
     }
 
     // ballCenter = new PrimaryBall(windowWidth / 2, windowHeight / 2, 400, 0.5, 0.5);
@@ -59,7 +59,8 @@ async function setup(asteroids) {
 }
 
 function display(balls) {
-  console.log("🚀 ~ file: sketch.js:62 ~ display ~ balls:", balls);
+
+  // setPrimaryBallGradient(31, 32);
 
   for (let i = 1; i <= balls.length; i++) {
     console.log(balls[i - 1]);
@@ -71,3 +72,4 @@ function display(balls) {
 function hideUI() {
   button1.hide();
 }
+

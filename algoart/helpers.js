@@ -10,7 +10,7 @@ function linearGradient(sX, sY, eX, eY, colorS, colorE) {
   gradient.addColorStop(0, colorS);
   gradient.addColorStop(1, colorE);
   drawingContext.fillStyle = gradient;
-  // drawingContext.strokeStyle = gradient;
+  drawingContext.strokeStyle = gradient;
 }
 
 function shadow() {
