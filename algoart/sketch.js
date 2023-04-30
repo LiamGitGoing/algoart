@@ -10,6 +10,7 @@ let currentDate = "";
 let zIndex = [];
 let chaosOrbit = 0;
 
+
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
@@ -17,10 +18,12 @@ function windowResized() {
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
   translate(-windowWidth * 2, windowHeight * 2);
-  background(58, 107, 53);
+  background(46, 2, 73);
+
+
 
   noFill();
-
+  stroke(248, 6, 204);
   getAsteroids();
   setInterval(getAsteroids, 3600000); // get data every hour
 }
@@ -30,11 +33,14 @@ function getAsteroids() {
   loadJSON(url, createAsteroids);
 }
 function createAsteroids(asteroidData) {
-  button1 = createButton("Look up");
-  button1.size(80, 30);
-  button1.position(windowWidth / 2 - 40, windowHeight / 2 - 15);
-  button1.style("background-color", "#958FD1");
-  button1.style("border-color", "#736BC2");
+  button1 = createButton("reorbit asteroids");
+  button1.size(130, 40);
+  button1.position(windowWidth / 1.2 - 40, windowHeight / 2 - 15);
+  button1.style("color", "#fff");
+  button1.style("background-color", "#A91079");
+  button1.style("border", "none");
+  button1.style("cursor", "pointer");
+
   button1.style("border-radius", "8px");
   button1.mousePressed(function () {
     for (let i = 1; i <= asteroidData.element_count; i++) {
@@ -53,56 +59,53 @@ function createAsteroids(asteroidData) {
         0.5
       );
     }
-    console.log("🚀 ~ file: sketch.js:56 ~ chaosOrbit:", chaosOrbit);
-
-    hideUI();
   });
 }
 
 function draw() {
-  background(58, 107, 53);
+  background(46, 2, 73);
   // setPrimaryBallGradient(203, 149);
 
   for (let i = 1; i <= balls.length; i++) {
     if (balls[i - 1].chaosOrbit == 1) {
       rotateY(millis() / 5000);
       rotateX(millis() / 5000);
-      translate(150, 30, 0);
+      translate(150, 30, 100);
     }
     if (balls[i - 1].chaosOrbit == 2) {
       rotateY(millis() / 6000);
       rotateX(millis() / 6000);
-      translate(-150, -30, 0);
+      translate(-150, -30, 100);
     }
     if (balls[i - 1].chaosOrbit == 3) {
       rotateY(millis() / 7000);
       rotateX(millis() / 7000);
-      translate(-150, 30, 0);
+      translate(-150, 30, 200);
     }
     if (balls[i - 1].chaosOrbit == 4) {
       rotateY(millis() / 4500);
       rotateX(millis() / 4500);
-      translate(150, -30, 0);
+      translate(150, -30, 200);
     }
     if (balls[i - 1].chaosOrbit == 5) {
       rotateY(millis() / 5500);
       rotateX(millis() / 5500);
-      translate(130, 40, 0);
+      translate(130, 40, 150);
     }
     if (balls[i - 1].chaosOrbit == 6) {
       rotateY(millis() / 6500);
       rotateX(millis() / 6500);
-      translate(-130, -40, 0);
+      translate(-130, -40, 150);
     }
     if (balls[i - 1].chaosOrbit == 7) {
       rotateY(millis() / 5000);
       rotateX(millis() / 5000);
-      translate(-130, 40, 0);
+      translate(-130, 40, 50);
     }
     if (balls[i - 1].chaosOrbit == 8) {
       rotateY(millis() / 6000);
       rotateX(millis() / 6000);
-      translate(130, -40, 0);
+      translate(130, -40, 50);
     }
     if (balls[i - 1].chaosOrbit == 9) {
       rotateY(millis() / 7000);
@@ -124,7 +127,7 @@ function draw() {
       rotateX(millis() / 6500);
       translate(100, -20, 20);
     }
-
+    
     balls[i - 1].show();
   }
 }
