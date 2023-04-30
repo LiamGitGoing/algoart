@@ -7,7 +7,6 @@ let errorM = false;
 let x = 0;
 let asteroids = {};
 let currentDate = "";
-let zIndex = [];
 let chaosOrbit = 0;
 
 
@@ -44,16 +43,11 @@ function createAsteroids(asteroidData) {
   button1.style("border-radius", "8px");
   button1.mousePressed(function () {
     for (let i = 1; i <= asteroidData.element_count; i++) {
-      zIndex[i - 1] =
-        asteroidData.near_earth_objects[currentDate][i - 1].estimated_diameter.meters.estimated_diameter_max / 2;
-    }
-    for (let i = 1; i <= asteroidData.element_count; i++) {
       chaosOrbit = random([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
       balls[i - 1] = new PrimaryBall(
         windowWidth / i,
         windowWidth / i,
         asteroidData.near_earth_objects[currentDate][i - 1].estimated_diameter.meters.estimated_diameter_max / 2,
-        zIndex[i - 1],
         chaosOrbit,
         0.5,
         0.5
