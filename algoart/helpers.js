@@ -17,7 +17,7 @@ function shadow() {
   drawingContext.shadowOffsetX = 14;
   drawingContext.shadowOffsetY = 14;
   drawingContext.shadowBlur = 14;
-  drawingContext.shadowColor = color(0, 0, 0);
+  drawingContext.shadowColor = color(227, 180, 72);
 }
 
 function setPrimaryBallGradient(colorGradientA, colorGradientB) {
@@ -26,8 +26,8 @@ function setPrimaryBallGradient(colorGradientA, colorGradientB) {
     0, //Start point
     windowWidth,
     windowHeight, //End point
-    color(colorGradientA, 25, 87), //Start color
-    color(colorGradientB, 51, 88) //End color
+    color(colorGradientA, 209, 143), //Start color
+    color(colorGradientB, 143, 209) //End color
   );
 
   shadow();
