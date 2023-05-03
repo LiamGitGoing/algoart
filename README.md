@@ -9,4 +9,4 @@ Usage
 
 When you run the application, you will see a map with a "Look up" button. Clicking the "Look up" button will retrieve flight data from the OpenSky API for the current location of your device. The application will then generate a moving art-piece, where the number and size of the individual art elements is determined by the received flight data.
 
-![asteroids](https://github.com/KintsugiCode/algoart/issues/1)
+![asteroids](https://user-images.githubusercontent.com/41804800/235857305-12023756-f962-4180-a02a-d413568bd7a9.png)
